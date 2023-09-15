@@ -24,3 +24,14 @@ class AuthenticationTests(TestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(CustomUser.objects.count(), 1)
+
+    def test_registration_invalid_data(self):
+        invalid_data = {
+            "phone_number": "",
+            "password": "short",
+            "first_name": "John",
+            "last_name": "Doe",
+        }
+        response = self.client.post(self.registration_url, invalid_data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
