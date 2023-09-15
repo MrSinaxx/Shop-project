@@ -54,3 +54,9 @@ class AuthenticationTests(TestCase):
         response = self.client.post(self.login_url, login_data, format="json")
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
+    def test_otp_verification_valid(self):
+        otp_data = {
+            "otp": generate_otp(),
+        }
+        response = self.client.post(self.otp_verification_url, otp_data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
