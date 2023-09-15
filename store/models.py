@@ -9,3 +9,9 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     quantity = models.IntegerField()
+
+
+class Order(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    order_date = models.DateTimeField()
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
