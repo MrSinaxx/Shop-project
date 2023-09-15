@@ -47,3 +47,10 @@ class AuthenticationTests(TestCase):
         response = self.client.post(self.login_url, login_data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+    def test_login_invalid_phone_number(self):
+        login_data = {
+            "phone_number": "nonexistent_phone",
+        }
+        response = self.client.post(self.login_url, login_data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
