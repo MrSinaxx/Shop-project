@@ -60,3 +60,10 @@ class AuthenticationTests(TestCase):
         }
         response = self.client.post(self.otp_verification_url, otp_data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_otp_verification_invalid(self):
+        otp_data = {
+            "otp": "invalid_otp",
+        }
+        response = self.client.post(self.otp_verification_url, otp_data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
