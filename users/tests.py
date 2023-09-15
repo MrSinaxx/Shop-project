@@ -35,3 +35,15 @@ class AuthenticationTests(TestCase):
         response = self.client.post(self.registration_url, invalid_data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+    def test_login_valid_phone_number(self):
+        CustomUser.objects.create_user(
+            phone_number="1234567890",
+            password="securepassword123",
+        )
+
+        login_data = {
+            "phone_number": "1234567890",
+        }
+        response = self.client.post(self.login_url, login_data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
