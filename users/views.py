@@ -16,3 +16,21 @@ class UserRegistrationView(APIView):
                 status=status.HTTP_201_CREATED,
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserLoginView(APIView):
+    def post(self, request):
+        phone_number = request.data.get("phone_number")
+        user = CustomUser.objects.filter(phone_number=phone_number).first()
+
+        if not user:
+            return Response(
+                {"error": "User not found."}, status=status.HTTP_404_NOT_FOUND
+            )
+
+        otp = generate_otp()
+
+        return Response(
+            {"message": "OTP sent successfully."}, status=status.HTTP_200_OK
+        )
+
