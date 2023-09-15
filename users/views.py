@@ -34,3 +34,14 @@ class UserLoginView(APIView):
             {"message": "OTP sent successfully."}, status=status.HTTP_200_OK
         )
 
+
+class OTPVerificationView(APIView):
+    def post(self, request):
+        serializer = OTPSerializer(data=request.data)
+        if serializer.is_valid():
+            otp_entered = serializer.validated_data["otp"]
+
+            return Response(
+                {"message": "OTP verified successfully."}, status=status.HTTP_200_OK
+            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
